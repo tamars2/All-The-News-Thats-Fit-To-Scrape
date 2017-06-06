@@ -18,6 +18,8 @@ $(document).on("click", "p", function() {
       $("#notes").append("<input id='titleinput' name='title' >");
       $("#notes").append("<textarea id='bodyinput' name='body'></textarea>");
       $("#notes").append("<button data-id='" + data._id + "' id='savenote'>Save Note</button>");
+      //hours of debugging the delete button uncovered this problem:
+      //the _id being passed to the button was that of the article, not the note.  FIXED.
       $("#notes").append("<button data-id='" + data.note._id + "' id='deletenote'>Delete Note</button>");
       if (data.note) {
         $("#titleinput").val(data.note.title);
@@ -43,10 +45,9 @@ $(document).on("click", "#savenote", function() {
   $("#titleinput").val("");
   $("#bodyinput").val("");
 });
-//delete not working
+
 $(document).on("click", "#deletenote", function() {
   var thisId = $(this).attr("data-id");
-  alert(thisId);
   $.ajax({
     method: "DELETE",
     url: "/delete/" + thisId
